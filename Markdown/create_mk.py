@@ -1,20 +1,17 @@
 import markdown
 import requests
 import requests_html
+from markdownify import markdownify
+from lxml import html
 
-url=f'https://www.cifraclub.com/oasis/dont-look-back-in-anger/'
-session= requests_html.HTMLSession()
-r= session.get(url)
-print(r.html.xpath(f'//*[@id="js-w-content"]/div[3]/div[1]/div[1]/div[1]/div/div/pre')[0].text)
+from bs4 import BeautifulSoup
+import urllib.request
 
-'''
-markdown_string = '# Hello World'
+adress = 'https://www.cifraclub.com/oasis/dont-look-back-in-anger/'
+response = urllib.request.urlopen(adress)
+html = response.read()
 
-with open('sample.md', 'w') as f:
-    f.write(markdown_string)
-    f.close()
+soup = BeautifulSoup(html,features="lxml")
+pre = soup.find_all('pre')
+print(pre)
 
-# 2
-html_string = markdown.markdown(markdown_string)
-print(html_string)
-'''
